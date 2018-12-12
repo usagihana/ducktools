@@ -1,6 +1,11 @@
 ![Ducktools Logo](logo.jpg)
 # ducktools
-namespaced duck (reducer package) factories for redux to reduce boilerplate and increase fun
+## namespaced duck (reducer package) factories for redux to reduce boilerplate and increase fun
+
+alpha version
+
+todo: add tests
+todo: add better docs and examples
 
 ## usage
 ```
