@@ -9,9 +9,8 @@ import { createReducerNamespace } from './createReducer'
 
 // types
 //
-export const CREATED = 'CREATED';
-export const REMOVED = 'REMOVED';
-export const RESET = 'RESET';
+export const VALUE_CREATED = 'VALUE_CREATED';
+export const VALUE_REMOVED = 'VALUE_REMOVED';
 
 
 // state slice reducer
@@ -21,11 +20,10 @@ export const stateShape = null // simple reference for state
 export function reducer(state = stateShape, action){
     switch(action.type) {
         
-        case CREATED: // since we only have one value its easy
+        case VALUE_CREATED: // since we only have one value its easy
             return action.payload // return a new reference
             
-        case REMOVED:
-        case RESET: // and total reset
+        case VALUE_REMOVED:
             return stateShape
             
         default:
@@ -40,24 +38,22 @@ export function reducer(state = stateShape, action){
 export function createValueDuck(namespace){
     
     // action creators
-    function create(value){ return {type: CREATED, payload: value, namespace} }
+    function create(value){ return {type: VALUE_CREATED, payload: value, namespace} }
     
-    function reset(){ return {type: RESET, namespace} }
+    function resetED_VALUE(){ return {type: RESETED_VALUE, namespace} }
     
-    function remove(){ return {type: REMOVED, namespace} }
+    function remove(){ return {type: VALUE_REMOVED, namespace} }
 
 
     const duck = {
         namespace,
         reducer: namespace ? createReducerNamespace(reducer, namespace) : reducer,
         // types
-        CREATED, 
-        REMOVED,
-        RESET,
+        VALUE_CREATED, 
+        VALUE_REMOVED,
         // actions
         create, 
         remove,
-        reset,
         // thunks, epics, sagas, data
     }
     

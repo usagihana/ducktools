@@ -3,12 +3,12 @@ import { createReducerNamespace } from './createReducer'
 
 // types
 //
-export const CREATED = 'CREATED';
-export const UPDATED = 'UPDATED';
-export const REMOVED = 'REMOVED';
-export const RESET = 'RESET';
-export const SORT = 'SORT';
-export const CREATEDMANY = 'CREATEDMANY';
+export const LIST_CREATED = 'LIST_CREATED';
+export const LIST_UPDATED = 'LIST_UPDATED';
+export const LIST_REMOVED = 'LIST_REMOVED';
+export const LIST_RESET = 'LIST_RESET';
+export const LIST_SORT = 'LIST_SORT';
+export const LIST_CREATEDMANY = 'LIST_CREATEDMANY';
 
 
 // state slice reducer
@@ -20,7 +20,7 @@ const stateShape = {
 
 function reducer(state = stateShape, action) {
     switch (action.type) {
-        case CREATED: {
+        case LIST_CREATED: {
             const id = action.payload.id
             const inList = state.list[id]
             const newState = {...state}
@@ -35,7 +35,7 @@ function reducer(state = stateShape, action) {
             
             return newState
         }
-        case REMOVED: {
+        case LIST_REMOVED: {
             const itemId = state.list[action.payload.id]
             if(!itemId) return state
             
@@ -47,20 +47,20 @@ function reducer(state = stateShape, action) {
             arrayRemove(state.listOrder, arrayIndex)
             return state
         }
-        case RESET: {
+        case LIST_RESET: {
             Object.keys(state.list).map( x => delete(state.list[x]) )
             state.list = {}
             state.listOrder = []
             state.metadata = null
             return {...stateShape}
         }
-        case CREATEDMANY: {
+        case LIST_CREATEDMANY: {
             const newState = {...state}
             newState.list = Object.assign(newState.list, JSON.parse(JSON.stringify(action.payload.list)) )
             newState.listOrder = newState.listOrder.concat(action.payload.listOrder)
             return newState
         }
-        case SORT: {
+        case LIST_SORT: {
             const newState = Object.assign({}, state)
             newState.listOrder.sort(function(a,b){
                 return action.payload.sortingFunction(a,b,newState)
@@ -77,38 +77,38 @@ export function createListDuck(namespace){
     
     // action creators
     function create(value){
-        return {type: CREATED, payload: value, namespace}
+        return {type: LIST_CREATED, payload: value, namespace}
     }
     
     function update(value){
-        return {type: UPDATED, payload: value, namespace}
+        return {type: LIST_UPDATED, payload: value, namespace}
     }
     
     function reset(){
-        return {type: RESET, namespace}
+        return {type: LIST_RESET, namespace}
     }
     
     function remove(){
-        return {type: REMOVED, namespace}
+        return {type: LIST_REMOVED, namespace}
     }
     
     function createMany({list, listOrder}){
-        return {type: CREATEDMANY, namespace, payload:{ list, listOrder } }
+        return {type: LIST_CREATEDMANY, namespace, payload:{ list, listOrder } }
     }
     
     function sort(sortingFunction){
-        return {type: CREATEDMANY, namespace, payload:{ sortingFunction} }
+        return {type: LIST_SORT, namespace, payload:{ sortingFunction} }
     }
 
     const duck = {
         namespace,
         reducer: namespace ? createReducerNamespace(reducer, namespace) : reducer,
         // type
-        CREATED, 
-        REMOVED,
-        RESET,
-        CREATEDMANY,
-        SORT,
+        LIST_CREATED, 
+        LIST_REMOVED,
+        LIST_RESET,
+        LIST_CREATEDMANY,
+        LIST_SORT,
         // action
         create, 
         //update,
