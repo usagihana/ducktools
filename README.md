@@ -4,7 +4,7 @@ namespaced duck (reducer package) factories for redux to reduce boilerplate and 
 
 ## usage
 ```
-import { createListDuck, CREATE } from 'ducktools'
+import { createListDuck, LIST_CREATE } from 'ducktools'
 
 const namespace = 'myList'
 
@@ -12,9 +12,9 @@ const myListDuck = createListDuck(namespace)
 
 exprt const myReducer = myListDuck.reducer
 
-// dispatch({type:myListDuck.CREATE, namespace: 'myList'})
+// dispatch({type:myListDuck.LIST_CREATE, namespace: 'myList'}, payload)
 
-// dispatch({type: CREATE, namespace})
+// dispatch({type: LIST_CREATE, namespace, payload})
 
-// dispatch(myListDuck.create())
+// dispatch(myListDuck.create(payload))
 ```
