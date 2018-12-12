@@ -1,0 +1,30 @@
+{
+  "name": "@usagihana/ducktools",
+  "version": "1.0.0",
+  "description": "namespaced duck (reducer package) factories for redux to reduce boilerplate and increase fun",
+  "main": "dist/ducktools.js",
+  "author": "usagihana",
+  "license": "MIT",
+  "scripts": {
+    "start": "npm i && npm run build",
+    "prepublish": "npm run build",
+    "build": "npx webpack",
+    "clean": "rm -rf dist/"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/soundyogi/ducktools"
+  },
+  "keywords": [
+    "redux"
+  ],
+  "devDependencies": {
+    "@babel/core": "^7.2.0",
+    "@babel/plugin-proposal-class-properties": "^7.2.1",
+    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
+    "@babel/preset-env": "^7.2.0",
+    "babel-loader": "^8.0.4",
+    "webpack": "^4.27.1",
+    "webpack-cli": "^3.1.2"
+  }
+}
