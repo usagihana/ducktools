@@ -17,7 +17,7 @@ const myListDuck = createListDuck(namespace)
 
 exprt const myReducer = myListDuck.reducer
 
-// dispatch({type:myListDuck.LIST_CREATE, namespace: 'myList'}, payload)
+// dispatch({type:myListDuck.LIST_CREATE, namespace: 'myList', payload})
 
 // dispatch({type: LIST_CREATE, namespace, payload})
 
