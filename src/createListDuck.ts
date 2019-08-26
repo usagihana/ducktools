@@ -123,8 +123,6 @@ export function createListDuck(namespace){
         reset,
         createMany,
         sort
-        // thunks, 
-        // epics, sagas
     }
     
     return duck

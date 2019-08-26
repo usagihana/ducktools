@@ -1,8 +1,9 @@
 ![Ducktools Logo](logo.jpg)
-# ducktools
-## namespaced duck (reducer package) factories for redux to reduce boilerplate and increase fun
+# ducktools - namespaced duck factories
+## to reduce boilerplate and increase fun witjh redux
 
-## usage look at tests
+
+## Usage:
 ```
 // get a duck factory
 import { createListDuck } from "./createListDuck"

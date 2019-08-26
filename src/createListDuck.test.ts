@@ -25,8 +25,6 @@ import { createListDuck } from "./createListDuck"
         reset,
         createMany,
         sort
-        // thunks, 
-        // epics, sagas
     }
 */
 
