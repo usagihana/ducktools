@@ -1,6 +1,6 @@
 {
   "name": "@usagihana/ducktools",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "description": "namespaced duck (reducer package) factories for redux to reduce boilerplate and increase fun",
   "main": "dist/ducktools.js",
   "author": "usagihana",
