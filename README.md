@@ -2,24 +2,50 @@
 # ducktools
 ## namespaced duck (reducer package) factories for redux to reduce boilerplate and increase fun
 
-alpha version
-
-todo: add tests
-todo: add better docs and examples
-
-## usage
+## usage look at tests
 ```
-import { createListDuck, LIST_CREATE } from 'ducktools'
+// get a duck factory
+import { createListDuck } from "./createListDuck"
 
-const namespace = 'myList'
 
-const myListDuck = createListDuck(namespace)
+/*
+    const duck = {
+        namespace,
+        reducer: namespace ? createReducerNamespace(listReducer, namespace) : listReducer,
+        // type
+        LIST_CREATED, 
+        LIST_REMOVED,
+        LIST_RESET,
+        LIST_CREATEDMANY,
+        LIST_SORT,
+        // creators
+        create, 
+        remove,
+        reset,
+        createMany,
+        sort
+        // thunks, 
+        // epics, sagas
+    }
+*/
 
-exprt const myReducer = myListDuck.reducer
 
-// dispatch({type:myListDuck.LIST_CREATE, namespace: 'myList', payload})
+const namespace = "myNamespace";
+const myListDuck = createListDuck(namespace);
 
-// dispatch({type: LIST_CREATE, namespace, payload})
+const rootReducer = combineReducers({
+    myList: myListDuck.reducer
+})
 
-// dispatch(myListDuck.create(payload))
+const store = createStore(rootReducer, undefined, applyMiddleware(logger,thunk))
+
+store.dispatch({type: Date.now() }) // init default state
+
+const mockItem1 = { id: 'myId', name: "bla" }
+const mockItem2 = { id: 'myId2', name: "bla" }
+
+store.dispatch(myListDuck.create(mockItem1))
+store.dispatch(myListDuck.create(mockItem2))
+
+// same as: dispatch({type:myListDuck.LIST_CREATE, namespace: 'myNamespace', payload})
 ```

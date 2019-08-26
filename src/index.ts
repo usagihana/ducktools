@@ -1,5 +1,5 @@
 export * from './createEventBus'
 export * from './createReducer'
 export * from './createListDuck'
-export * from './createFetchDuck'
+export * from './createAsyncDuck'
 export * from './createValueDuck'

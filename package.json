@@ -1,19 +1,22 @@
 {
   "name": "@usagihana/ducktools",
-  "version": "1.0.0",
+  "version": "1.4.0",
   "description": "namespaced duck (reducer package) factories for redux to reduce boilerplate and increase fun",
   "main": "dist/ducktools.js",
   "author": "usagihana",
   "license": "MIT",
   "scripts": {
-    "start": "npm i && npm run build",
-    "prepublish": "npm run build",
+    "start": "yarn clean && yarn test && yarn declaration && yarn build",
     "build": "npx webpack",
-    "clean": "rm -rf dist/"
+    "declaration": "tsc --declaration --allowJs false",
+    "clean": "npx rimraf -rf dist/",
+    "reset": "npx rimraf -rf dist/ yarn.lock yarn-error.log node_modules",
+    "test": "ts-node node_modules/tape/bin/tape **/*.test.ts && ts-node node_modules/tape/bin/tape **/*.test.ts | tnyan",
+    "testwatch": "chokidar src/**/*.ts -c \"yarn test\""
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/soundyogi/ducktools"
+    "url": "https://github.com/usagihana/ducktools"
   },
   "keywords": [
     "redux"
@@ -22,12 +25,18 @@
     "access": "public"
   },
   "devDependencies": {
-    "@babel/core": "^7.2.0",
-    "@babel/plugin-proposal-class-properties": "^7.2.1",
-    "@babel/plugin-proposal-object-rest-spread": "^7.2.0",
-    "@babel/preset-env": "^7.2.0",
+    "@babel/core": "^7.5.5",
+    "@babel/plugin-proposal-class-properties": "^7.5.5",
+    "@babel/plugin-proposal-object-rest-spread": "^7.5.5",
+    "@babel/preset-env": "^7.5.5",
+    "@babel/preset-typescript": "^7.3.3",
     "babel-loader": "^8.0.4",
+    "chokidar-cli": "^2.0.0",
+    "tap-nyan": "^1.1.0",
+    "tape": "^4.11.0",
+    "ts-node": "^8.3.0",
+    "typescript": "^3.5.3",
     "webpack": "^4.27.1",
-    "webpack-cli": "^3.1.2"
+    "webpack-cli": "^3.3.7"
   }
 }

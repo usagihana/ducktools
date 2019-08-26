@@ -4,6 +4,10 @@ const TerserPlugin = require('terser-webpack-plugin');
 process.env.BABEL_ENV = 'production';
 
 module.exports = {
+  resolve: {
+		modules: ['node_modules'],
+    extensions: ['.ts'],
+  },
   mode: 'production',
   stats: "verbose",
   optimization: {
@@ -12,7 +16,7 @@ module.exports = {
       parallel: true
     })],
   },
-  entry: './index.js',
+  entry: './src/index.ts',
   output: {
     filename: 'ducktools.js',
     library: 'ducktools',
@@ -22,12 +26,13 @@ module.exports = {
   module: {
     rules: [
         {   
-            test: /\.js$/, 
+            test: /\.ts$/, 
             loader: 'babel-loader?cacheDirectory', 
             exclude: /node_modules/,
             options: {
                 presets: [
-                    ["@babel/preset-env"]
+                  ['@babel/preset-typescript', { isTSX: true, allExtensions: true }],
+                  ["@babel/preset-env"]
                 ],
                 plugins: [
                         ["@babel/plugin-proposal-object-rest-spread"],

@@ -4,35 +4,35 @@ import { createReducerNamespace } from './createReducer'
 // Fetching Indicator Single Value
 //
 
-// types
-//
-export const FETCH_REQUESTED = 'FETCH_REQUESTED';
-export const FETCH_FULFILLED = 'FETCH_FULFILLED';
-export const FETCH_REJECTED  = 'FETCH_REJECTED';
-
-
-// state slice / reducer
-//
-export const stateShape = null // simple reference for state
-
-export function reducer(state = false, action){
-    switch(action.type) {
-        
-        case FETCH_REQUESTED: 
-            return true
-        case FETCH_FULFILLED: 
-            return false
-        case FETCH_REJECTED:  
-            return stateShape
-            
-        default:
-            return state;
-    }
-};
-
 // construct a duck package with optional namespace filtering
 //
-export function createFetchDuck(namespace){
+export function createAsyncDuck(namespace){
+
+    // types
+    //
+    const FETCH_REQUESTED = 'FETCH_REQUESTED';
+    const FETCH_FULFILLED = 'FETCH_FULFILLED';
+    const FETCH_REJECTED  = 'FETCH_REJECTED';
+
+
+    // state slice / reducer
+    //
+    const stateShape = null // simple reference for state
+
+    function asyncReducer(state = false, action){
+        switch(action.type) {
+            
+            case FETCH_REQUESTED: 
+                return true
+            case FETCH_FULFILLED: 
+                return action.payload
+            case FETCH_REJECTED:  
+                return stateShape
+                
+            default:
+                return state;
+        }
+    };
     
     // action creators
     function request(){ 
@@ -63,7 +63,7 @@ export function createFetchDuck(namespace){
     
     const duck = {
         namespace,
-        reducer: namespace ? createReducerNamespace(reducer, namespace) : reducer,
+        reducer: namespace ? createReducerNamespace(asyncReducer, namespace) : asyncReducer,
         // types
         FETCH_REQUESTED, 
         FETCH_FULFILLED, 
