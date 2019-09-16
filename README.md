@@ -11,19 +11,9 @@ These reusable, namespaced, state slice reducer packages help you save time
 ### createValueDuck
 ```js
 import { createValueDuck } from "@usagihana/ducktools"
-
-
-// choose a namespace, onlyActions with correct namespaces will be send to these reducers
-const namespace = "myNamespace";
-
-export const myValueDuck = createValueDuck(namespace);
-
-// ducks bundle their namespüaced reducer, action creators and action types
-export const reducer = myValueDuck.reducer
-
-
-// createValueDuck returns
-/*  const duck = {
+/* Ducks bundle their namespaced reducer, action creators and action types
+    createValueDuck returns:
+    const duck = {
         namespace,
         reducer: namespace ? createReducerNamespace(valueReducer, namespace) : valueReducer,
         //types
@@ -34,6 +24,14 @@ export const reducer = myValueDuck.reducer
         remove,
     }
 */
+
+// choose a namespace, onlyActions with correct namespaces will be send to these reducers
+const namespace = "myNamespace";
+export const myValueDuck = createValueDuck(namespace);
+export const reducer = myValueDuck.reducer
+
+
+
 
 
 store.dispatch( myValueDuck.create('value') )
@@ -47,17 +45,7 @@ store.dispatch( myValueDuck.remove() )
 ### createAsyncDuck
 ```js
 import { createAsyncDuck } from "@usagihana/ducktools"
-
-
-const namespace = "myNamespace";
-
-const myAsyncDuck = createAsyncDuck(namespace);
-
-export const reducer = myAsyncDuck.reducer
-
-
-// createAsyncDuck returns: 
-/*
+/*  createAsyncDuck returns:
     const duck = {
         namespace,
         reducer: namespace ? createReducerNamespace(asyncReducer, namespace) : asyncReducer,
@@ -74,6 +62,10 @@ export const reducer = myAsyncDuck.reducer
     }
 */
 
+
+const namespace = "myNamespace";
+export const myAsyncDuck = createAsyncDuck(namespace);
+export const reducer = myAsyncDuck.reducer
 
 
 store.dispatch( myAsyncDuck.request() )
@@ -92,17 +84,8 @@ setTimeout( () => {
 ### createListDuck
 ```js
 import { createListDuck } from "@usagihana/ducktools"
-
-
-const namespace = "myNamespace";
-
-export const myListDuck = createListDuck(namespace);
-
-export const rootReducer = myListDuck.reducer
-
-
-// createListDuck returns: 
-/*  const duck = {
+/*  createListDuck returns: 
+    const duck = {
         namespace,
         reducer: namespace ? createReducerNamespace(listReducer, namespace) : listReducer,
         // type
@@ -121,14 +104,17 @@ export const rootReducer = myListDuck.reducer
 */
 
 
+const namespace = "myNamespace";
+export const myListDuck = createListDuck(namespace);
+export const rootReducer = myListDuck.reducer
+
+
 store.dispatch( myListDuck.create({ id: 'myId',  name: "bla" }) )
 store.dispatch( myListDuck.create({ id: 'myId2', name: "bla" }) )
 // store.dispatch({type:myListDuck.LIST_CREATE, namespace: 'myNamespace', payload:{ id: 'myId',  name: "bla" }})
 
-// list have a object with IDs as keys and a order array
-
-// state after dispatches
-const stateShape = {
+/* Lists have a object with IDs as keys and a order array
+store = {
     list: { 
         "myID": { id: "myID" },
         "myID2": { id: "myID2" }
@@ -138,6 +124,7 @@ const stateShape = {
         "myID2"
     ]
 }
+*/
 
 ```
 
@@ -159,7 +146,7 @@ const myAsyncDuck = createAsyncDuck(namespace);
 const rootReducer = combineReducers({
     myList: myListDuck.reducer,
     myValue: myValueDuck.reducer,
-    myAsyncDuck: myAsyncDuck.reducer
+    myAsync: myAsyncDuck.reducer
 })
 
 
@@ -168,7 +155,6 @@ const store = createStore(rootReducer, undefined, applyMiddleware(logger,thunk))
 
 
 store.dispatch( myValueDuck.create('value') )
-store.dispatch( myValueDuck.remove() )
 
 
 store.dispatch( myListDuck.create({ id: 'myId',  name: "bla" }) )
@@ -178,7 +164,24 @@ store.dispatch( myListDuck.create({ id: 'myId2', name: "bla" }) )
 store.dispatch( myAsyncDuck.request() )
 
 setTimeout( () => {
-  const data = 'value'
+  const data = 'asyncvalue'
   store.dispatch( myAsyncDuck.fulfill(data) )
 }, 1000)
+
+/*
+store = {
+    myList: {
+        list: { 
+            "myID": { id: "myID" },
+            "myID2": { id: "myID2" }
+        },
+        listOrder: [
+            "myID", 
+            "myID2"
+        ]
+    },
+    myValue: 'value',
+    myAsync: 'asyncvalue'
+}
+*/
 ```
