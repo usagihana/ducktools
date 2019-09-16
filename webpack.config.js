@@ -18,7 +18,7 @@ module.exports = {
   },
   entry: './src/index.ts',
   output: {
-    filename: 'ducktools.js',
+    filename: 'index.js',
     library: 'ducktools',
     libraryTarget: 'umd',
     path: path.resolve(__dirname, 'dist')

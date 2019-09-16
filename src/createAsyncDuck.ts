@@ -10,9 +10,9 @@ export function createAsyncDuck(namespace){
 
     // types
     //
-    const FETCH_REQUESTED = 'FETCH_REQUESTED';
-    const FETCH_FULFILLED = 'FETCH_FULFILLED';
-    const FETCH_REJECTED  = 'FETCH_REJECTED';
+    const ASYNC_REQUESTED = 'ASYNC_REQUESTED';
+    const ASYNC_FULFILLED = 'ASYNC_FULFILLED';
+    const ASYNC_REJECTED  = 'ASYNC_REJECTED';
 
 
     // state slice / reducer
@@ -22,11 +22,11 @@ export function createAsyncDuck(namespace){
     function asyncReducer(state = false, action){
         switch(action.type) {
             
-            case FETCH_REQUESTED: 
+            case ASYNC_REQUESTED: 
                 return true
-            case FETCH_FULFILLED: 
+            case ASYNC_FULFILLED: 
                 return action.payload
-            case FETCH_REJECTED:  
+            case ASYNC_REJECTED:  
                 return stateShape
                 
             default:
@@ -36,15 +36,15 @@ export function createAsyncDuck(namespace){
     
     // action creators
     function request(){ 
-        return { type: FETCH_REQUESTED, namespace }
+        return { type: ASYNC_REQUESTED, namespace }
     }
     
     function reject(){ 
-        return { type: FETCH_REJECTED, namespace }
+        return { type: ASYNC_REJECTED, namespace }
     }
     
     function fulfill(payload){ 
-        return { type: FETCH_FULFILLED, namespace, payload }
+        return { type: ASYNC_FULFILLED, namespace, payload }
     }
     
     // async Creators (thunk)
@@ -65,9 +65,9 @@ export function createAsyncDuck(namespace){
         namespace,
         reducer: namespace ? createReducerNamespace(asyncReducer, namespace) : asyncReducer,
         // types
-        FETCH_REQUESTED, 
-        FETCH_FULFILLED, 
-        FETCH_REJECTED,
+        ASYNC_REQUESTED, 
+        ASYNC_REJECTED,
+        ASYNC_FULFILLED,
         // actions
         request, 
         reject, 

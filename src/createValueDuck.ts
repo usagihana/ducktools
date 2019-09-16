@@ -54,7 +54,6 @@ export function createValueDuck(namespace){
         // actions
         create, 
         remove,
-        // thunks, epics, sagas, data
     }
     
     return duck
