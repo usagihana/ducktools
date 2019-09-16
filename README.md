@@ -9,7 +9,7 @@ These reusable, namespaced, state slice reducer packages help you save time
 
 ## Usage:
 ### createValueDuck
-```
+```js
 import { createValueDuck } from "@usagihana/ducktools"
 
 
@@ -39,12 +39,13 @@ export const reducer = myValueDuck.reducer
 store.dispatch( myValueDuck.create('value') )
 // store.dispatch({type:myValueDuck.VALUE_CREATE, namespace: 'myNamespace', payload:'value' })
 
-store.dispatch( myListDuck.remove() )
+store.dispatch( myValueDuck.remove() )
+// store.dispatch({type:myValueDuck.VALUE_REMOVE, namespace: 'myNamespace' })
 ```
 
 
 ### createAsyncDuck
-```
+```js
 import { createAsyncDuck } from "@usagihana/ducktools"
 
 
@@ -75,11 +76,11 @@ export const reducer = myAsyncDuck.reducer
 
 
 
-store.dispatch( myListDuck.request() )
+store.dispatch( myAsyncDuck.request() )
 
 setTimeout( () => {
   const data = 'value'
-  store.dispatch( myListDuck.fulfill(data) )
+  store.dispatch( myAsyncDuck.fulfill(data) )
 }, 1000)
 
 // store.dispatch( myAsyncDuck.reject() )
@@ -89,7 +90,7 @@ setTimeout( () => {
 
 
 ### createListDuck
-```
+```js
 import { createListDuck } from "@usagihana/ducktools"
 
 
@@ -143,7 +144,7 @@ const stateShape = {
 
 
 ### Full Usage Example:
-```
+```js
 import { createValueDuck, createAsyncDuck, createListDuck } from "@usagihana/ducktools"
 
 
@@ -162,44 +163,22 @@ const rootReducer = combineReducers({
 })
 
 
-// create store like normal
-//
+// create store 
 const store = createStore(rootReducer, undefined, applyMiddleware(logger,thunk))
 
 
-/* valueDuck 
-   actionCreators: { create, remove }
-*/
-
 store.dispatch( myValueDuck.create('value') )
-// store.dispatch({type:myValueDuck.VALUE_CREATE, namespace: 'myNamespace', payload:'value' })
+store.dispatch( myValueDuck.remove() )
 
-store.dispatch( myListDuck.remove() )
-
-
-
-/* listDuck
-   actionCreators: { create, remove, reset, createMany, sort } 
-*/
 
 store.dispatch( myListDuck.create({ id: 'myId',  name: "bla" }) )
 store.dispatch( myListDuck.create({ id: 'myId2', name: "bla" }) )
-// store.dispatch({type:myListDuck.LIST_CREATE, namespace: 'myNamespace', payload:{ id: 'myId',  name: "bla" }})
-
-// list have a object with IDs as keys and a order array
 
 
-/* asyncDuck
-   actionCreators: { request, reject, fulfill }
-*/
-
-store.dispatch( myListDuck.request() )
+store.dispatch( myAsyncDuck.request() )
 
 setTimeout( () => {
   const data = 'value'
-  store.dispatch( myListDuck.fulfill(data) )
+  store.dispatch( myAsyncDuck.fulfill(data) )
 }, 1000)
-
-// store.dispatch( myAsyncDuck.reject() )
-// store.dispatch({type:myAsyncDuck.ASYNC_REJECTED, namespace: 'myNamespace'})
 ```
