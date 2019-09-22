@@ -26,8 +26,7 @@ import { createValueDuck } from "@usagihana/ducktools"
 */
 
 // choose a namespace, onlyActions with correct namespaces will be send to these reducers
-const namespace = "myNamespace";
-export const myValueDuck = createValueDuck(namespace);
+export const myValueDuck = createValueDuck('app_myValue');
 export const reducer = myValueDuck.reducer
 
 
@@ -63,8 +62,7 @@ import { createAsyncDuck } from "@usagihana/ducktools"
 */
 
 
-const namespace = "myNamespace";
-export const myAsyncDuck = createAsyncDuck(namespace);
+export const myAsyncDuck = createAsyncDuck('app_myAsyncValue');
 export const reducer = myAsyncDuck.reducer
 
 
@@ -104,8 +102,7 @@ import { createListDuck } from "@usagihana/ducktools"
 */
 
 
-const namespace = "myNamespace";
-export const myListDuck = createListDuck(namespace);
+export const myListDuck = createListDuck('app_myList');
 export const rootReducer = myListDuck.reducer
 
 
@@ -139,9 +136,9 @@ import { createValueDuck, createAsyncDuck, createListDuck } from "@usagihana/duc
 //
 const namespace = "myNamespace";
 
-const myListDuck = createListDuck(namespace);
-const myValueDuck = createValueDuck(namespace);
-const myAsyncDuck = createAsyncDuck(namespace);
+const myListDuck = createListDuck(namespace+'myList');
+const myValueDuck = createValueDuck(namespace+'myValue');
+const myAsyncDuck = createAsyncDuck(namespace+'myAsync');
 
 const rootReducer = combineReducers({
     myList: myListDuck.reducer,
