@@ -40,8 +40,8 @@ const store = createStore(rootReducer, undefined, applyMiddleware(logger,thunk))
 
 store.dispatch({type: Date.now() }) // init default state
 
-const mockItem1 = { id: 'myId', name: "bla" }
-const mockItem2 = { id: 'myId2', name: "bla" }
+const mockItem1 = { id: 'myId', name: "bla"}
+const mockItem2 = { id: 'myId2', name: "bla", extra: 'extra'}
 
 
 test('createListDuck', function (t) {
@@ -62,7 +62,7 @@ test('create Items', function (t) {
     t.ok(state.listOrder.length === 1 && state.listOrder[0] === 'myId', 'array is present and item is in position 0')
 
     const myArrRef = state.listOrder
-    const mockItem3 = { id: 'myId3', name: "bla" }
+    const mockItem3 = { id: 'myId3', name: "bla", extra: 'extra' }
 
     store.dispatch(myListDuck.create(mockItem2))
     store.dispatch(myListDuck.create(mockItem3))
@@ -95,3 +95,22 @@ test('delete Items', function (t) {
 
     t.end();
 });
+
+
+test('overwrite and merge Items', function (t) {
+
+    store.dispatch(myListDuck.create({ id: 'myId2', name: "bla" }))
+
+    let state = store.getState().myList
+
+    t.ok(!state.list["myId2"].extra, 'extra should be gone since we replaced the item')
+
+    store.dispatch(myListDuck.merge({ id: 'myId3', name: "bla" }))
+
+    state = store.getState().myList
+
+    t.ok(state.list["myId3"].extra, 'extra should be there since we merged the item')
+
+    t.end();
+});
+

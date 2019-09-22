@@ -4,16 +4,12 @@ import { createReducerNamespace } from './createReducer'
 // List Map with Order Array
 //
 
-interface IListItem extends Object {
-    id: string
-  } 
-
 export function createListDuck(namespace){
 
     // types
     //
     const LIST_CREATED = 'LIST_CREATED';
-    const LIST_UPDATED = 'LIST_UPDATED';
+    const LIST_MERGED = 'LIST_MERGED';
     const LIST_REMOVED = 'LIST_REMOVED';
     const LIST_RESET = 'LIST_RESET';
     const LIST_SORT = 'LIST_SORT';
@@ -42,6 +38,16 @@ export function createListDuck(namespace){
                 if(!inList){
                     newState.listOrder.push(id)
                 }
+                
+                return newState
+            }
+            case LIST_MERGED: {
+                const id = action.payload.id
+                const inList = state.list[id]
+                const newState = { list: {...state.list}, listOrder: [...state.listOrder], metadata: {...state.metadata} }
+                
+                // merge new data
+                newState.list[id] = Object.assign({}, {...newState.list[id]}, {...action.payload})
                 
                 return newState
             }
@@ -87,9 +93,14 @@ export function createListDuck(namespace){
     }
     
     // action creators
-    function create(item:IListItem){
+    function create(item){
         if(!item.id) throw Error('listItems need an id property')
         return {type: LIST_CREATED, payload: item, namespace}
+    }
+
+    function merge(item){
+        if(!item.id) throw Error('listItems need an id property')
+        return {type: LIST_MERGED, payload: item, namespace}
     }
     
     function reset(){
@@ -113,12 +124,14 @@ export function createListDuck(namespace){
         reducer: namespace ? createReducerNamespace(listReducer, namespace) : listReducer,
         // type
         LIST_CREATED, 
+        LIST_MERGED,
         LIST_REMOVED,
         LIST_RESET,
         LIST_CREATEDMANY,
         LIST_SORT,
         // creators
         create, 
+        merge,
         remove,
         reset,
         createMany,

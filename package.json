@@ -1,6 +1,6 @@
 {
   "name": "@usagihana/ducktools",
-  "version": "2.0.2",
+  "version": "2.1.0",
   "description": "namespaced duck (reducer package) factories for redux to reduce boilerplate and increase fun",
   "main": "dist/index.js",
   "types": "./dist/index.d.ts",
