@@ -49,6 +49,11 @@ export function createListDuck(namespace){
                 // merge new data
                 newState.list[id] = Object.assign({}, {...newState.list[id]}, {...action.payload})
                 
+                // if not yet in list add key to order array
+                if(!inList){
+                    newState.listOrder.push(id)
+                }
+                
                 return newState
             }
             case LIST_REMOVED: {
