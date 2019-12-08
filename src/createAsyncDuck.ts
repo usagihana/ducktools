@@ -23,11 +23,11 @@ export function createAsyncDuck(namespace){
         switch(action.type) {
             
             case ASYNC_REQUESTED: 
-                return 'requested'
+                return true
             case ASYNC_FULFILLED: 
                 return action.payload
             case ASYNC_REJECTED:  
-                return 'rejected'
+                return action.payload || null
                 
             default:
                 return state;
